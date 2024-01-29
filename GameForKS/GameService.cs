@@ -2,7 +2,7 @@
 
 namespace GameForKS
 {
-    internal class GameService
+    public class GameService
     {
 
         private int _raund; 
@@ -22,6 +22,8 @@ namespace GameForKS
         }
 
 
+
+
         public string RaundGo(int numberUser)
         {
             Random random = new Random();
@@ -34,10 +36,13 @@ namespace GameForKS
 
             string gameInfo = ""; // результат  игры
 
-            if (Math.Abs(number - numberPK) == Math.Abs(number - numberUser))
+            int AbsPk = Math.Abs(number - numberPK);
+            int AbsUs = Math.Abs(number - numberUser);
+
+            if (AbsPk == AbsUs)
                 gameInfo = "Ничья";
 
-            if (Math.Abs(number - numberPK) < Math.Abs(number - numberUser))
+            if (AbsPk < AbsUs)
             {
                 PlauPK.Score++;
                 gameInfo = $"{PlauPK.Name} победил\n";

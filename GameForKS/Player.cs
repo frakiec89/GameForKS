@@ -1,7 +1,7 @@
 ﻿
 namespace GameForKS
 {
-    internal class Player
+    public class Player
     {
         public string Name {  get; private set; }   
         public string Description { get; set; }
