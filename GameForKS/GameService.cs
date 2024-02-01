@@ -1,59 +1,66 @@
 ﻿
-
+// nocopy
 namespace GameForKS
 {
     public class GameService
     {
 
-        private int _raund; 
+        private int _raund;  // раунд  ишры
+        public int Min { get; private set; } // мин число для загадывания 
+        public int Max { get; private set; } // макс  число  
 
-        public int Min { get; private set; }
-        public int Max { get; private set; }
+        public Player PlauUs { get; set; } // игрок  человек
+        public Player PlauPK { get; set; } // игрок  комп
 
-        public Player PlauUs { get; set; }
-        public Player PlauPK { get; set; }
 
-        public GameService(string name , string description , int  min , int  max)
+        public GameService(string name , string description , int  min , int  max) // констуктор  класса 
         {
-             PlauUs = new Player (name  , description);
+             PlauUs = new Player (name  , description); 
              PlauPK = new Player ();
              Min = min;
              Max = max;
         }
 
 
-
-
-        public string RaundGo(int numberUser)
+        public string RaundGo(int numberUser) // 1 раунд  игры
         {
             Random random = new Random();
             int number = random.Next(Min, Max); // искомое  число
             int numberPK = random.Next(Min, Max); // число  пк 
-            _raund++;
+            _raund++; // увеличеть  раунд
 
             string infoRaund =
-               $"Раунд:{_raund}, искомое число: {number}, {PlauPK.Name} ({PlauPK.Description}) загадал:{numberPK}\n"; // инфа о  раунде
+               $"Раунд:{_raund}, искомое число: {number}, {PlauPK.Name} ({PlauPK.Description}) загадал: {numberPK}\n"; // инфа о  раунде
 
             string gameInfo = ""; // результат  игры
 
-            int AbsPk = Math.Abs(number - numberPK);
+            int AbsPk = Math.Abs(number - numberPK);   // модуль  разности  числа 
             int AbsUs = Math.Abs(number - numberUser);
 
-            if (AbsPk == AbsUs)
+            if (AbsPk == AbsUs) 
                 gameInfo = "Ничья";
 
-            if (AbsPk < AbsUs)
+            if (AbsPk < AbsUs) // победа  компа 
             {
-                PlauPK.Score++;
+                PlauPK.Points++;
                 gameInfo = $"{PlauPK.Name} победил\n";
             }
-            else
+            else  // победа  юзера 
             {
-                PlauUs.Score++;
+                PlauUs.Points++;
                 gameInfo = $"{PlauUs.Name} победил\n";
             }
 
+
+                 // раунл 1 ...пк победил                  Вася (пк), счет: 1     петя (юзер) счет: 0  
             return infoRaund + gameInfo + "Итог Игры:\n" + PlauPK.Info() + "\n" + PlauUs.Info(); // итоговый результат  
+        }
+
+        public string Info ()
+        {
+           return  $"Игра \"угодай число\"\n" +
+                $"Загадывается случайное число в диапазоне от {Min} до {Max}\n" +
+                $"побеждает ток, кто назовет число ближе к загадоному чем соперник";
         }
     }
 }
